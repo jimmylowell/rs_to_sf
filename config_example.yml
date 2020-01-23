@@ -6,10 +6,11 @@ redshift:
   aws_key_id: XXXXXX
   aws_secret_key: secret_key
   aws_arn: arn:aws:iam::123123123:role/rolename
+  s3_bucket: bucket_name
 
 snowflake:
   database: rs_arc
-  account:  wowinc.us-east-1
+  account:  account.us-east-1
   username: username
   password: password
 

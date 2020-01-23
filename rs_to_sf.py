@@ -18,6 +18,7 @@ with open("config.yml", 'r') as ymlfile:
     AWS_KEY_ID = RS['aws_key_id']
     AWS_SECRET_KEY = RS['aws_secret_key']
     AWS_ARN = RS['aws_arn']
+    S3_BUCKET = RS['s3_bucket']
 
     # Snowflake Config
     SF = cfg['snowflake']
@@ -30,7 +31,7 @@ with open("config.yml", 'r') as ymlfile:
 
 UNLOAD_CMD = r"""
 UNLOAD ('SELECT * FROM {schema_name}.{table_name}')
-to 's3://wowinc-snowflake-staging/{schema_name}/{table_name}/' 
+to 's3://{s3_bucket}/{schema_name}/{table_name}/' 
 iam_role '{aws_arn}'
 gzip
 maxfilesize 500mb
@@ -44,7 +45,7 @@ escape
 
 COPY_CMD = r"""
 COPY into {database_name}.{schema_name}.{table_name}
-from s3://wowinc-snowflake-staging/{schema_name}/{table_name}/
+from s3://{s3_bucket}/{schema_name}/{table_name}/
 credentials=(aws_key_id='{aws_key_id}', aws_secret_key='{aws_secret_key}')
 file_format = (
   type = csv
@@ -119,7 +120,8 @@ def rs_unload(schema_name, table_name):
     unload_table_cmd = UNLOAD_CMD.format(
         schema_name=schema_name,
         table_name=table_name,
-        aws_arn=AWS_ARN
+        aws_arn=AWS_ARN,
+        s3_bucket=S3_BUCKET
 
     )
     print(unload_table_cmd)
@@ -135,7 +137,8 @@ def sf_copy_to(schema_name, table_name):
         schema_name=schema_name,
         table_name=table_name,
         aws_key_id=AWS_KEY_ID,
-        aws_secret_key=AWS_SECRET_KEY
+        aws_secret_key=AWS_SECRET_KEY,
+        s3_bucket=S3_BUCKET
     )
     print(copy_table_cmd)
     run_sf_cmd(copy_table_cmd)
