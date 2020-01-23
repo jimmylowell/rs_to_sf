@@ -1,0 +1,19 @@
+redshift:
+  database: db_name
+  host:     hostname/ip
+  username: username
+  password: password
+  aws_key_id: XXXXXX
+  aws_secret_key: secret_key
+  aws_arn: arn:aws:iam::123123123:role/rolename
+
+snowflake:
+  database: rs_arc
+  account:  wowinc.us-east-1
+  username: username
+  password: password
+
+table_list:
+  - schema.tablea
+  - schemaaa.tableb
+
