@@ -1,5 +1,14 @@
 # RS to SF
 Edit config file and run!
+```shell script
+python rs_to_sf.py
+```
+
+Requires pyscopg2 and snowflake connector
+```shell script
+pip install psycopg2
+pip install --upgrade snowflake-connector-python
+```
 
 - Gets Table DDL from redshift
 - Converts redshift SQL to Snowflake
