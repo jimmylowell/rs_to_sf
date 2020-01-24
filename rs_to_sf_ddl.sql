@@ -1,4 +1,3 @@
-RS_TO_SF_DDL = r"""
 SELECT
  --table_id
  --,REGEXP_REPLACE (schemaname, '^zzzzzzzz', '') AS schemaname
@@ -262,5 +261,3 @@ from (SELECT
 -------------------------------------------------------
 
 ;
-
-"""

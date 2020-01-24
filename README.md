@@ -1,5 +1,5 @@
 # RS to SF
-Edit config file and run!
+Edit config file, rename to config.yml and run!
 ```shell script
 python rs_to_sf.py
 ```

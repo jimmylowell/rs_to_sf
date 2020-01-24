@@ -3,7 +3,11 @@ import snowflake.connector
 from datetime import datetime
 import yaml
 
-from rs_to_sf_ddl import RS_TO_SF_DDL
+# from rs_to_sf_ddl import RS_TO_SF_DDL
+
+with open("rs_to_sf_ddl.sql") as rs_to_sf_ddl:
+    RS_TO_SF_DDL = rs_to_sf_ddl.read()
+    rs_to_sf_ddl.close()
 
 # Get all config properties
 with open("config.yml", 'r') as ymlfile:
@@ -50,6 +54,7 @@ credentials=(aws_key_id='{aws_key_id}', aws_secret_key='{aws_secret_key}')
 file_format = (
   type = csv
   field_delimiter = '\001'
+  TRIM_SPACE = TRUE
   null_if = ('\\N')
   --FIELD_OPTIONALLY_ENCLOSED_BY = '\042'
   ESCAPE = '\134'
@@ -107,12 +112,13 @@ def get_sf_ddl_from_rs(schema_name, table_name):
         table_name=table_name,
         schema_name=schema_name
     )
-    sf_ddl_list = run_rs_cmd(rs_to_sf_cmd)
+    print(rs_to_sf_cmd)
+    # sf_ddl_list = run_rs_cmd(rs_to_sf_cmd)
     sf_table_ddl = ""
-    for record in sf_ddl_list:
-        ddl_line = record[0]
-        sf_table_ddl += (ddl_line + "\n")
-    print(sf_table_ddl)
+    # for record in sf_ddl_list:
+    #     ddl_line = record[0]
+    #     sf_table_ddl += (ddl_line + "\n")
+    # print(sf_table_ddl)
     return sf_table_ddl
 
 
@@ -125,10 +131,10 @@ def rs_unload(schema_name, table_name):
 
     )
     print(unload_table_cmd)
-    try:
-        run_rs_cmd(unload_table_cmd)
-    except psycopg2.InternalError as e:
-        print("ERROR: " + e.pgerror)
+    # try:
+    #     run_rs_cmd(unload_table_cmd)
+    # except psycopg2.InternalError as e:
+    #     print("ERROR: " + e.pgerror)
 
 
 def sf_copy_to(schema_name, table_name):
@@ -141,7 +147,7 @@ def sf_copy_to(schema_name, table_name):
         s3_bucket=S3_BUCKET
     )
     print(copy_table_cmd)
-    run_sf_cmd(copy_table_cmd)
+    # run_sf_cmd(copy_table_cmd)
 
 
 if __name__ == "__main__":
@@ -160,12 +166,12 @@ if __name__ == "__main__":
         create_sf_table(schema_name, table_name)
 
         # Do the Redshift unload first
-        rs_unload(schema_name, table_name)
+        # rs_unload(schema_name, table_name)
         rs_unload_end_time = datetime.now()
         rs_unload_elapsed_time = rs_unload_end_time - table_start_time
 
         # Then copy to command
-        sf_copy_to(schema_name, table_name)
+        # sf_copy_to(schema_name, table_name)
         sf_copy_end_time = datetime.now()
         sf_copy_elapsed_time = sf_copy_end_time - rs_unload_end_time
 
