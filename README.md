@@ -1,19 +1,31 @@
 # RS to SF
+Requires pyscopg2, yaml, datetime, and snowflake-connector
+```shell script
+pip install psycopg2, pyyaml, datetime
+pip install --upgrade snowflake-connector-python
+```
 Edit config file, rename to config.yml and run!
 ```shell script
 python rs_to_sf.py
 ```
+- Gets Table DDL from Redshift - many thanks to: 
 
-Requires pyscopg2 and snowflake connector
-```shell script
-pip install psycopg2
-pip install --upgrade snowflake-connector-python
-```
+https://github.com/awslabs/amazon-redshift-utils/blob/master/src/AdminViews/v_generate_tbl_ddl.sql
 
-- Gets Table DDL from redshift
-- Converts redshift SQL to Snowflake
+- Converts Redshift table ddl / data types to Snowflake
     - Does not include default values
-    - DOes not include serial/sequence creation
-- Runs table DDL in Snowflake DB (Make sure schema is created first)
-- Unloads table data from RS into S3 bucket
-- Copy cmd to load S3 files into SF table
+    - Does not include serial/sequence creation
+        - There are some comments in SQL file on how to do this.
+        - You'll want to create sequences, 
+        then get table DDL that includes default values for those sequences.
+        - I didn't run into any other scenarios/issues, 
+        but I"m sure they are out there...
+- CREATE table DDL in Snowflake DB (Make sure schema is created first)
+- UNLOAD table data from RS into S3 bucket
+- COPY cmd to load S3 files into SF table
+
+To Do:
+- [ ] argparse for config file location
+- [ ] build in sequence generation
+- [ ] proper logging
+- [ ] multithreading/asyncio?
