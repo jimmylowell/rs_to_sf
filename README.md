@@ -1,8 +1,10 @@
 # RS to SF
-Requires pyscopg2, yaml, datetime, and snowflake-connector
+Requires psycopg2, pyyaml, datetime, and snowflake-connector
+[psycopg2]
+[snowflake-connector]
 ```shell script
-pip install psycopg2, pyyaml, datetime
-pip install --upgrade snowflake-connector-python
+pip3 install psycopg2 pyyaml datetime
+pip3 install --upgrade snowflake-connector-python
 ```
 Edit config file, rename to config.yml and run!
 ```shell script
