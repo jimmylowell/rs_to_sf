@@ -1,7 +1,11 @@
 # RS to SF
-Requires psycopg2, pyyaml, datetime, and snowflake-connector
-[psycopg2]
-[snowflake-connector]
+Requires [psycopg2], [pyyaml], [datetime], and [snowflake-connector]
+
+[psycopg2]: https://pypi.org/project/psycopg2/
+[snowflake-connector]: https://docs.snowflake.net/manuals/user-guide/python-connector.html
+[pyyaml]: https://pypi.org/project/PyYAML/
+[datetime]: https://pypi.org/project/datetime3/
+
 ```shell script
 pip3 install psycopg2 pyyaml datetime
 pip3 install --upgrade snowflake-connector-python
