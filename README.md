@@ -8,7 +8,7 @@ pip3 install --upgrade snowflake-connector-python
 ```
 Edit config file, rename to config.yml and run!
 ```shell script
-python rs_to_sf.py
+python3 rs_to_sf.py
 ```
 - Gets Table DDL from Redshift - many thanks to: 
 
